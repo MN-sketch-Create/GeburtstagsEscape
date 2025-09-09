@@ -6,21 +6,117 @@
 <title>Rätsel 4 — Frieda</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#d4af37;--pale:#f5e6c4;--bg-a:#0b0b0b;--bg-b:#141414;}
-*{box-sizing:border-box;}
-body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:"Playfair Display", Georgia, serif;background: linear-gradient(160deg,var(--bg-a),var(--bg-b));color:var(--pale);padding:20px;}
-.card{width:100%;max-width:900px;padding:26px;border-radius:16px;background: rgba(0,0,0,0.6);border: 1px solid rgba(212,175,55,0.12);box-shadow: 0 12px 40px rgba(0,0,0,0.6);text-align:center;}
-.intro{font-size:1.15rem;line-height:1.6;margin-bottom:30px;color:var(--pale);text-shadow:0 0 10px rgba(212,175,55,0.3);}
-input{padding:14px 20px;font-size:1.1rem;border-radius:30px;border:2px solid var(--gold);background:rgba(0,0,0,0.65);color:var(--pale);width:260px;text-align:center;margin-bottom:20px;outline:none;transition: all 0.25s ease;}
-input:focus{border-color:#f5e6c4;box-shadow:0 0 14px rgba(212,175,55,0.4);}
-button{display:inline-block;padding:12px 26px;border-radius:999px;border:2px solid var(--gold);background:transparent;color:var(--gold);font-size:1.1rem;cursor:pointer;transition:all .25s;margin:5px;}
-button:hover{background:var(--gold);color:#0d0d0d;transform:translateY(-3px);box-shadow:0 0 20px rgba(212,175,55,0.3);}
-.message{margin-top:20px;font-size:1.15rem;display:none;}
-.message.success{color:#00c56a;font-weight:600;}
-.message.error{color:#f65c5c;font-weight:600;}
-.hint{margin-top:20px;font-size:1.1rem;color:#00c0ff;display:none;font-style:italic;}
-a.next-link{display:inline-block;margin-top:25px;font-size:1.2rem;color:var(--gold);text-decoration:none;border-bottom:1px solid transparent;transition:border .25s;}
-a.next-link:hover{border-bottom:1px solid var(--gold);}
+:root {
+  --gold:#d4af37;
+  --pale:#f5e6c4;
+  --bg-a:#0b0b0b;
+  --bg-b:#141414;
+}
+* {box-sizing:border-box;}
+body {
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:"Playfair Display", Georgia, serif;
+  background: linear-gradient(160deg,var(--bg-a),var(--bg-b));
+  color:var(--pale);
+  padding:20px;
+  overflow:hidden;
+  position:relative;
+}
+.card {
+  width:100%;
+  max-width:900px;
+  padding:26px;
+  border-radius:16px;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(212,175,55,0.12);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+.intro {
+  font-size:1.15rem;
+  line-height:1.6;
+  margin-bottom:30px;
+  color:var(--pale);
+  text-shadow:0 0 10px rgba(212,175,55,0.3);
+}
+input {
+  padding:14px 20px;
+  font-size:1.1rem;
+  border-radius:30px;
+  border:2px solid var(--gold);
+  background:rgba(0,0,0,0.65);
+  color:var(--pale);
+  width:260px;
+  text-align:center;
+  margin-bottom:20px;
+  outline:none;
+  transition: all 0.25s ease;
+}
+input:focus {
+  border-color:#f5e6c4;
+  box-shadow:0 0 14px rgba(212,175,55,0.4);
+}
+button {
+  display:inline-block;
+  padding:12px 26px;
+  border-radius:999px;
+  border:2px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  font-size:1.1rem;
+  cursor:pointer;
+  transition:all .25s;
+  margin:5px;
+  position:relative;
+}
+button:hover {
+  background:var(--gold);
+  color:#0d0d0d;
+  transform:translateY(-3px);
+  box-shadow:0 0 20px rgba(212,175,55,0.3);
+}
+.message {
+  margin-top:20px;
+  font-size:1.15rem;
+  display:none;
+}
+.message.success {color:#00c56a;font-weight:600;}
+.message.error {color:#f65c5c;font-weight:600;}
+.hint {
+  margin-top:20px;
+  font-size:1.1rem;
+  color:#00c0ff;
+  display:none;
+  font-style:italic;
+}
+a.next-link {
+  display:inline-block;
+  margin-top:25px;
+  font-size:1.2rem;
+  color:var(--gold);
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+  transition:border .25s;
+}
+a.next-link:hover {border-bottom:1px solid var(--gold);}
+
+/* Effekte */
+@keyframes buttonGlow {0% {box-shadow:0 0 10px var(--gold);}50% {box-shadow:0 0 25px var(--gold);}100% {box-shadow:0 0 10px var(--gold);}}
+.candle-row {position:absolute;bottom:0;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:1;}
+.candle {width:6px;height:40px;background:linear-gradient(to top,#fff,var(--gold));border-radius:2px;position:relative;}
+.flame {position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:10px;height:14px;background:radial-gradient(circle at 50% 40%, #ffec85, #ff9900 70%, transparent 80%);border-radius:50%;animation:flicker 1s infinite alternate ease-in-out;}
+@keyframes flicker {0% { transform:translateX(-50%) scale(1) rotate(-2deg); opacity:0.9; }100%{ transform:translateX(-50%) scale(1.1) rotate(2deg); opacity:1; }}
+.stars {position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0;}
+.star {position:absolute;width:2px;height:2px;background:var(--gold);border-radius:50%;opacity:0.8;animation: twinkle 4s infinite ease-in-out;}
+@keyframes twinkle {0%,100% { opacity:0.2; transform:scale(0.8);} 50% { opacity:1; transform:scale(1.5);} }
+.spark {position:absolute;width:4px;height:4px;background:var(--gold);border-radius:50%;opacity:0.9;pointer-events:none;animation: sparkMove 0.6s forwards;}
+@keyframes sparkMove {0% {transform:translate(0,0) scale(1); opacity:1;}100% {transform:translate(var(--x), var(--y)) scale(0); opacity:0;}}
 </style>
 </head>
 <body>
@@ -31,23 +127,84 @@ a.next-link:hover{border-bottom:1px solid var(--gold);}
   </div>
   <input type="text" id="wordInput" placeholder="Lösungswort...">
   <br>
-  <button onclick="checkWord()">🔑 Prüfen</button>
+  <button id="checkBtn" onclick="checkWord()">🔑 Prüfen</button>
   <button onclick="showHint()">💡 Tipp</button>
 
   <div id="errorMsg" class="message error">❌ Falsches Wort – versuch es nochmal!</div>
   <div id="successMsg" class="message success">
-    ✅ Richtig! Du bist fast am Ziel!<br>
+    ✅ Richtig! Du bist fast am Ziel! Auf zum letzten Geschenk!<br>
     <a class="next-link" href="seite6.html">➡ Letztes Geschenk</a>
   </div>
   <div id="hintMsg" class="hint">Familie Mencke hätte es nicht verschmäht.</div>
 </div>
+
+<!-- Kerzen -->
+<div class="candle-row" id="candleRow"></div>
+<!-- Sterne -->
+<div class="stars" id="stars"></div>
+
 <script>
-function checkWord(){
-  const input=document.getElementById("wordInput").value.trim().toLowerCase();
-  const correctWord="frieda";
-  document.getElementById("successMsg").style.display=input===correctWord?"block":"none";
-  document.getElementById("errorMsg").style.display=input===correctWord?"none":"block";
+// Kerzen erzeugen
+const row = document.getElementById('candleRow');
+for(let i=0;i<38;i++){
+  const candle = document.createElement('div');
+  candle.className='candle';
+  const flame = document.createElement('div');
+  flame.className='flame';
+  candle.appendChild(flame);
+  row.appendChild(candle);
 }
+
+// Sterne erzeugen
+const stars = document.getElementById('stars');
+for(let i=0;i<80;i++){
+  const s = document.createElement('div');
+  s.className='star';
+  s.style.top=Math.random()*100+'%';
+  s.style.left=Math.random()*100+'%';
+  s.style.animationDelay=(Math.random()*5)+'s';
+  stars.appendChild(s);
+}
+
+// Funken beim Button-Klick
+function createSparks(btn){
+  for(let i=0;i<8;i++){
+    const spark = document.createElement('div');
+    spark.className='spark';
+    const x=(Math.random()-0.5)*100+'px';
+    const y=(Math.random()-0.5)*100+'px';
+    spark.style.setProperty('--x',x);
+    spark.style.setProperty('--y',y);
+    const rect=btn.getBoundingClientRect();
+    spark.style.top=rect.top+rect.height/2+'px';
+    spark.style.left=rect.left+rect.width/2+'px';
+    document.body.appendChild(spark);
+    setTimeout(()=>{spark.remove();},600);
+  }
+}
+
+// Rätsel-Logik
+function checkWord(){
+  const input = document.getElementById("wordInput").value.trim().toLowerCase();
+  const correctWord = "frieda";
+  const errorMsg = document.getElementById("errorMsg");
+  const successMsg = document.getElementById("successMsg");
+  const btn = document.getElementById("checkBtn");
+
+  createSparks(btn);
+
+  if(input === correctWord){
+    successMsg.style.display="block";
+    errorMsg.style.display="none";
+    btn.style.animation='buttonGlow 0.8s ease-in-out 2';
+  } else {
+    successMsg.style.display="none";
+    errorMsg.style.display="block";
+    btn.style.boxShadow='0 0 15px red';
+    setTimeout(()=>{btn.style.boxShadow='0 0 6px rgba(212,175,55,0.6)';},300);
+  }
+}
+
 function showHint(){document.getElementById("hintMsg").style.display="block";}
 </script>
 </body>
