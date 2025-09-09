@@ -6,13 +6,130 @@
 <title>Geburtstagsrätsel — Start</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#d4af37;--pale:#f5e6c4;--bg-a:#0b0b0b;--bg-b:#141414;}
+:root {
+  --gold:#d4af37;
+  --pale:#f5e6c4;
+  --bg-a:#0b0b0b;
+  --bg-b:#141414;
+}
 *{box-sizing:border-box;}
-body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:"Playfair Display", Georgia, serif;background: linear-gradient(160deg,var(--bg-a),var(--bg-b));color:var(--pale);padding:20px;}
-.card{width:100%;max-width:900px;padding:26px;border-radius:16px;background: rgba(0,0,0,0.6);border: 1px solid rgba(212,175,55,0.12);box-shadow: 0 12px 40px rgba(0,0,0,0.6);text-align:center;}
-.intro{font-size:1.2rem;line-height:1.6;margin-bottom:30px;color:var(--pale);text-shadow:0 0 10px rgba(212,175,55,0.3);}
-button{display:inline-block;padding:12px 26px;border-radius:999px;border:2px solid var(--gold);background:transparent;color:var(--gold);font-size:1.1rem;cursor:pointer;transition:all .25s;margin:5px;}
-button:hover{background:var(--gold);color:#0d0d0d;transform:translateY(-3px);box-shadow:0 0 20px rgba(212,175,55,0.3);}
+body {
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:"Playfair Display", Georgia, serif;
+  background: linear-gradient(160deg,var(--bg-a),var(--bg-b));
+  color:var(--pale);
+  padding:20px;
+  overflow:hidden;
+  position:relative;
+}
+.card {
+  width:100%;
+  max-width:900px;
+  padding:26px;
+  border-radius:16px;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(212,175,55,0.3);
+  box-shadow: 0 0 30px rgba(212,175,55,0.4);
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+.intro {
+  font-size:1.2rem;
+  line-height:1.6;
+  margin-bottom:30px;
+  color:var(--pale);
+  text-shadow:0 0 12px rgba(212,175,55,0.5);
+}
+button {
+  display:inline-block;
+  padding:12px 26px;
+  border-radius:999px;
+  border:2px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  font-size:1.1rem;
+  cursor:pointer;
+  transition:all .25s;
+  margin:5px;
+  text-shadow:0 0 6px rgba(212,175,55,0.6);
+}
+button:hover {
+  background:var(--gold);
+  color:#0d0d0d;
+  transform:translateY(-3px);
+  box-shadow:0 0 25px rgba(212,175,55,0.8);
+}
+
+/* Kerzenreihe */
+.candle-row {
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:6px;
+  z-index:1;
+}
+.candle {
+  width:6px;
+  height:40px;
+  background:linear-gradient(to top, #fff, var(--gold));
+  border-radius:2px;
+  position:relative;
+}
+.flame {
+  position:absolute;
+  top:-12px;
+  left:50%;
+  transform:translateX(-50%);
+  width:10px;
+  height:14px;
+  background:radial-gradient(circle at 50% 40%, #ffec85, #ff9900 70%, transparent 80%);
+  border-radius:50%;
+  animation:flicker 1s infinite alternate ease-in-out;
+}
+@keyframes flicker {
+  0% { transform:translateX(-50%) scale(1) rotate(-2deg); opacity:0.9; }
+  100%{ transform:translateX(-50%) scale(1.1) rotate(2deg); opacity:1; }
+}
+
+/* Goldstaub-Overlay */
+.stars {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
+.star {
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:var(--gold);
+  border-radius:50%;
+  opacity:0.8;
+  animation: twinkle 4s infinite ease-in-out;
+}
+@keyframes twinkle {
+  0%,100% { opacity:0.2; transform:scale(0.8);}
+  50% { opacity:1; transform:scale(1.5);}
+}
+
+/* Countdown */
+.countdown {
+  font-size:1.3rem;
+  color:var(--gold);
+  margin-top:20px;
+  text-shadow:0 0 12px rgba(212,175,55,0.7);
+}
 </style>
 </head>
 <body>
@@ -20,8 +137,57 @@ button:hover{background:var(--gold);color:#0d0d0d;transform:translateY(-3px);box
   <div class="intro">
     Liebe Rebecca, ich wünsche dir zu deinem Geburtstag alles Liebe und Gute. Leider sind durch ein kleines Missgeschick alle deine Geschenke verschlüsselt. Begebe dich auf die Rätselreise mit mir zu deinen Geschenken.
   </div>
-  <button onclick="location.href='seite2.html'">Yippieh, klar auf zu den Geschenken</button>
-  <button onclick="window.open('https://youtu.be/7isX9oKveJw?si=TdY9nygrbJZKMFUH','_blank')">Ok, dann bis nächstes Jahr</button>
+  <button id="btn1" onclick="location.href='seite2.html'" disabled>Yippieh, klar auf zu den Geschenken</button>
+  <button id="btn2" onclick="window.open('https://youtu.be/7isX9oKveJw?si=TdY9nygrbJZKMFUH','_blank')" disabled>Ok, dann bis nächstes Jahr</button>
+  <div class="countdown" id="countdown">Deine Reise beginnt in 3...</div>
 </div>
+
+<!-- Kerzen -->
+<div class="candle-row" id="candleRow"></div>
+
+<!-- Sterne / Goldstaub -->
+<div class="stars" id="stars"></div>
+
+<script>
+// 38 Kerzen erzeugen
+const row = document.getElementById('candleRow');
+for(let i=0;i<38;i++){
+  const candle = document.createElement('div');
+  candle.className = 'candle';
+  const flame = document.createElement('div');
+  flame.className = 'flame';
+  candle.appendChild(flame);
+  row.appendChild(candle);
+}
+
+// Sterne erzeugen
+const stars = document.getElementById('stars');
+for(let i=0;i<80;i++){
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.top = Math.random()*100+'%';
+  s.style.left = Math.random()*100+'%';
+  s.style.animationDelay = (Math.random()*5)+'s';
+  stars.appendChild(s);
+}
+
+// Countdown Logik
+let counter = 38;
+const countdownEl = document.getElementById('countdown');
+const btn1 = document.getElementById('btn1');
+const btn2 = document.getElementById('btn2');
+
+const timer = setInterval(()=>{
+  counter--;
+  if(counter>0){
+    countdownEl.textContent = "Deine Reise beginnt in " + counter + "...";
+  } else {
+    clearInterval(timer);
+    countdownEl.textContent = "Los geht’s - auf zu deinen Geschenken! 🎉";
+    btn1.disabled = false;
+    btn2.disabled = false;
+  }
+},100);
+</script>
 </body>
 </html>
